@@ -1,4 +1,4 @@
-# Esquelo de app con slider
+# Esqueleto de app con slider
 
 Estructura de app con slider base de películas app.
 
