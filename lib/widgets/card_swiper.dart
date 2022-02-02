@@ -3,29 +3,24 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:peliculas_app/models/models.dart';
 
 class CardSwiper extends StatelessWidget {
-
   final List<Movie> movies;
 
-  const CardSwiper({
-    Key? key, 
-    required this.movies
-    }) : super(key: key);
+  const CardSwiper({Key? key, required this.movies}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     // Responsive
     final size = MediaQuery.of(context).size;
 
-    if ( movies.isEmpty ) {
+    if (movies.isEmpty) {
       return SizedBox(
-      width: double.infinity,
-      height: size.height * 0.5,
-      child: const Center(child: CircularProgressIndicator()),
-    );
+        width: double.infinity,
+        height: size.height * 0.5,
+        child: const Center(child: CircularProgressIndicator()),
+      );
     }
-    
 
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: size.height * 0.5,
       child: Swiper(
@@ -36,15 +31,20 @@ class CardSwiper extends StatelessWidget {
         itemBuilder: (_, int index) {
           final movie = movies[index];
 
+          movie.heroId = 'swiper-${movie.id}';
+
           return GestureDetector(
-            onTap: () => Navigator.pushNamed(context, 'details',
-                arguments: movie ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: FadeInImage(
-                placeholder:  const AssetImage('assets/no-image.jpg'),
-                image: NetworkImage( movie.fullPosterImg ),
-                fit: BoxFit.cover,
+            onTap: () =>
+                Navigator.pushNamed(context, 'details', arguments: movie),
+            child: Hero(
+              tag: movie.heroId!,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: FadeInImage(
+                  placeholder: const AssetImage('assets/no-image.jpg'),
+                  image: NetworkImage(movie.fullPosterImg),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           );
